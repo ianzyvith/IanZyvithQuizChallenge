@@ -33,6 +33,25 @@ var questions = [
         questionChoiceList.textContent = questions[questionIndex].choices[i];
         optionListEl.appendChild(questionChoiceList);
     }
+
+    optionListEl.addEventListener("click", checkAnswer);
+  }
+
+  // checks answer from question
+  function checkAnswer(event) {
+
+    if (event.target.textContent === questions[questionIndex].answer) {
+        correctCount++;
+        questionResultEl.textContent = "That is Correct!";
+    }
+
+    else {
+        // subtract time from timer
+
+        questionResultEl.textContent = "That is Incorrect. You have lost 5 seconds.";
+    }
+
+    nextQuestion();
   }
   
   // brings up next question
