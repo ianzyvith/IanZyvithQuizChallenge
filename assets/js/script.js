@@ -28,6 +28,7 @@ var questions = [
 
   // starts the quiz when text is clicked
   function startQuiz() {
+    time = 60;
     timer = setInterval(timerStart, 1000);
     timerEl.textContent = "Time: " + time;
 
@@ -64,8 +65,15 @@ var questions = [
 
     else {
         // subtract time from timer
+        time = time - 10;
 
-        questionResultEl.textContent = "That is Incorrect. You have lost 5 seconds.";
+        if (time <= 0) {
+            time = 0;
+        }
+
+        timerEl.textContent = "Time: " + time;
+
+        questionResultEl.textContent = "That is Incorrect. You have lost 10 seconds.";
     }
 
     optionListEl.innerHTML = "";
@@ -111,6 +119,19 @@ var questions = [
     finalScore.textContent = "Your final score is " + correctCount + "!";
     questionEl.appendChild(finalScore);
 
+    var saveScore = document.createElement("p");
+    saveScore.textContent = "Save Your Score";
+    questionEl.appendChild(saveScore);
+
+    saveScore.addEventListener("click", scoreKeeper);
+  }
+
+
+
+  // localstorage for scores
+  function scoreKeeper() {
+      var scoreName = window.prompt("Put your initials to save your score!");
+      localStorage.setItem(scoreName, correctCount);
   }
 
 
